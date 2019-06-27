@@ -33,10 +33,10 @@ DLLEXPORT int hamdist_ver ()
         return SPH_UDF_VERSION;
 }
 
-long long hamdist_fn(sphinx_uint64_t x, sphinx_uint64_t y)
+long long hamdist_fn(sphinx_int64_t x, sphinx_int64_t y)
 {
         long long dist = 0;
-        sphinx_uint64_t val = x ^ y; // XOR
+        sphinx_int64_t val = x ^ y; // XOR
  
         // Count the number of set bits
         while(val)
@@ -54,7 +54,7 @@ long long parse_fn(SPH_UDF_ARGS * args, int argn) {
         return *((long *)ptr);
     }
     if (args->arg_types[argn]==SPH_UDF_TYPE_INT64) {
-        return *((sphinx_uint64_t *)ptr);
+        return *((sphinx_int64_t *)ptr);
     }
     return 0;
 }
@@ -84,7 +84,7 @@ DLLEXPORT void hamdist_deinit ( SPH_UDF_INIT * init )
 {
 }
 
-DLLEXPORT sphinx_uint64_t hamdist ( SPH_UDF_INIT * init, SPH_UDF_ARGS * args, char * error_flag )
+DLLEXPORT sphinx_int64_t hamdist ( SPH_UDF_INIT * init, SPH_UDF_ARGS * args, char * error_flag )
 {
         return hamdist_fn(parse_fn(args, 0), parse_fn(args, 1));
 }
@@ -117,7 +117,7 @@ DLLEXPORT int hamdist_mv_init ( SPH_UDF_INIT * init, SPH_UDF_ARGS * args, char *
         return 0;
 }
 
-DLLEXPORT sphinx_uint64_t hamdist_mv ( SPH_UDF_INIT * init, SPH_UDF_ARGS * args, char * error_flag )
+DLLEXPORT sphinx_int64_t hamdist_mv ( SPH_UDF_INIT * init, SPH_UDF_ARGS * args, char * error_flag )
 {
 
         unsigned int * mva = (unsigned int *) args->arg_values[0];
@@ -130,7 +130,7 @@ DLLEXPORT sphinx_uint64_t hamdist_mv ( SPH_UDF_INIT * init, SPH_UDF_ARGS * args,
             return -1;
         }
 
-        sphinx_uint64_t arg1 = parse_fn(args, 1);
+        sphinx_int64_t arg1 = parse_fn(args, 1);
 
         if ( args->arg_types[0]==SPH_UDF_TYPE_INT64SET )
         {
@@ -139,7 +139,7 @@ DLLEXPORT sphinx_uint64_t hamdist_mv ( SPH_UDF_INIT * init, SPH_UDF_ARGS * args,
                 for ( i=0; i<n; i++ )
                 {
 
-                        bf = hamdist_fn((((sphinx_uint64_t)mva[1]) << 32) + (sphinx_uint64_t)mva[0], arg1);
+                        bf = hamdist_fn((((sphinx_int64_t)mva[1]) << 32) + (sphinx_int64_t)mva[0], arg1);
                         
                         if (limit == -1 || bf < limit) 
                         {
