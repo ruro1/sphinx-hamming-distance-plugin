@@ -101,7 +101,7 @@ DLLEXPORT int hamdist_mv_init ( SPH_UDF_INIT * init, SPH_UDF_ARGS * args, char *
         }
 
         // check argument type
-        if ( args->arg_types[0]!=SPH_UDF_TYPE_UINT32SET && args->arg_types[0]!=SPH_UDF_TYPE_UINT64SET )
+        if ( args->arg_types[0]!=SPH_UDF_TYPE_UINT32SET && args->arg_types[0]!=SPH_UDF_TYPE_INT64SET )
         {
                 snprintf ( error_message, SPH_UDF_ERROR_LEN, "HAMDIST_MV() requires 1 MVA argument" );
                 return 1;
@@ -132,7 +132,7 @@ DLLEXPORT sphinx_uint64_t hamdist_mv ( SPH_UDF_INIT * init, SPH_UDF_ARGS * args,
 
         sphinx_uint64_t arg1 = parse_fn(args, 1);
 
-        if ( args->arg_types[0]==SPH_UDF_TYPE_UINT64SET )
+        if ( args->arg_types[0]==SPH_UDF_TYPE_INT64SET )
         {
                 // handle mva64
                 n = *mva++ / 2;
