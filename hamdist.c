@@ -33,10 +33,10 @@ DLLEXPORT int hamdist_ver ()
         return SPH_UDF_VERSION;
 }
 
-long long hamdist_fn(sphinx_int64_t x, sphinx_int64_t y)
+long long hamdist_fn(sphinx_uint64_t x, sphinx_uint64_t y)
 {
         long long dist = 0;
-        sphinx_int64_t val = x ^ y; // XOR
+        sphinx_uint64_t val = x ^ y; // XOR
  
         // Count the number of set bits
         while(val)
@@ -55,6 +55,10 @@ long long parse_fn(SPH_UDF_ARGS * args, int argn) {
     }
     if (args->arg_types[argn]==SPH_UDF_TYPE_INT64) {
         return *((sphinx_int64_t *)ptr);
+    }
+    // assuming hex string of same sizes
+    if (args->arg_types[argn]==SPH_UDF_TYPE_STRING) {
+        return *((sphinx_uint64_t *)strtoull(ptr, NULL, 16));
     }
     return 0;
 }
