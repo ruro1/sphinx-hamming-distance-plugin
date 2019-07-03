@@ -75,9 +75,10 @@ DLLEXPORT int hamdist_init ( SPH_UDF_INIT * init, SPH_UDF_ARGS * args, char * er
 
         // check argument type
         if ( args->arg_types[0]!=SPH_UDF_TYPE_UINT32 && args->arg_types[1]!=SPH_UDF_TYPE_UINT32
-            && args->arg_types[0]!=SPH_UDF_TYPE_INT64 && args->arg_types[1]!=SPH_UDF_TYPE_INT64)
+            && args->arg_types[0]!=SPH_UDF_TYPE_INT64 && args->arg_types[1]!=SPH_UDF_TYPE_INT64
+            && args->arg_types[0]!=SPH_UDF_TYPE_STRING && args->arg_types[1]!=SPH_UDF_TYPE_STRING)
         {
-                snprintf ( error_message, SPH_UDF_ERROR_LEN, "HAMDIST() requires argument to be uint or int64" );
+                snprintf ( error_message, SPH_UDF_ERROR_LEN, "HAMDIST() requires argument to be uint, int64 or hex string" );
                 return 1;
         }
 
