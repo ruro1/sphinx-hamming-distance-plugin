@@ -58,7 +58,7 @@ long long parse_fn(SPH_UDF_ARGS * args, int argn) {
     }
     // assuming hex string of same sizes
     if (args->arg_types[argn]==SPH_UDF_TYPE_STRING) {
-        return *((sphinx_uint64_t *)strtoull(ptr, NULL, 16));
+        return strtoull(ptr, NULL, 16);
     }
     return 0;
 }
@@ -74,8 +74,8 @@ DLLEXPORT int hamdist_init ( SPH_UDF_INIT * init, SPH_UDF_ARGS * args, char * er
         }
 
         // check argument type
-        if ( args->arg_types[0]!=SPH_UDF_TYPE_UINT32 && args->arg_types[1]!=SPH_UDF_TYPE_UINT32
-            && args->arg_types[0]!=SPH_UDF_TYPE_INT64 && args->arg_types[1]!=SPH_UDF_TYPE_INT64
+        if (   args->arg_types[0]!=SPH_UDF_TYPE_UINT32 && args->arg_types[1]!=SPH_UDF_TYPE_UINT32
+            && args->arg_types[0]!=SPH_UDF_TYPE_INT64  && args->arg_types[1]!=SPH_UDF_TYPE_INT64
             && args->arg_types[0]!=SPH_UDF_TYPE_STRING && args->arg_types[1]!=SPH_UDF_TYPE_STRING)
         {
                 snprintf ( error_message, SPH_UDF_ERROR_LEN, "HAMDIST() requires argument to be uint, int64 or hex string" );
